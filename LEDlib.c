@@ -1,3 +1,5 @@
+//TODO: split LED Matrix and Game State functionality in to separate libraries.
+
 #include <avr/io.h>
 #include <util/delay.h>
 #include <stdarg.h>
