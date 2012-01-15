@@ -6,7 +6,7 @@
 
 #include "LEDlib.h"
 #include "input.h"
-#include "serial_lib_interrupt.h"
+//#include "serial_lib_interrupt.h"
 
 #include "animation1.h"
 #include "animation2.h"
@@ -64,7 +64,6 @@ void menu_setup(State * s, LEDmatrix* m) {
 int main (void)
 {
 	//serial_init();
-	//serial_printf("Enabled serial!\n");
 
 	// Set up the clock interrupt
 	TCCR0B = (1<<CS01)|(1<<CS00); //Timer clock = system/64

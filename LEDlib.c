@@ -5,7 +5,6 @@
 #include <stdarg.h>
 #include <stdlib.h>
 
-#include "serial_lib_interrupt.h"
 #include "input.h"
 
 #define TICKPIN PINB4
