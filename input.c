@@ -6,8 +6,6 @@
 
 static unsigned char disabled = 0;
 
-
-
 #define PI0 PINC0
 #define PI1 PINC1
 #define PI2 PINC2

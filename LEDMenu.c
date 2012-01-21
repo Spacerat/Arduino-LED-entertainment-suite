@@ -10,6 +10,7 @@
 
 #include "animation1.h"
 #include "animation2.h"
+#include "dodgegame.h"
 
 volatile unsigned int tick = 0;
 
@@ -24,8 +25,6 @@ int menu_x = 0;
 
 // Define menu functionality
 void menu_step(State * s, LEDmatrix* m, const input_t input) {
-	//serial_printf("working!\n");
-	//PORTB ^= 0xFF;
 }
 
 void menu_click(State * s, LEDmatrix* m, const input_t input, const input_t prev) {
@@ -46,6 +45,10 @@ void menu_click(State * s, LEDmatrix* m, const input_t input, const input_t prev
 				state_free(s);
 				s = state_create(&animation2_setup, m);
 				return;
+			case 3:
+				state_free(s);
+				s = state_create(&dodgegame_setup, m);
+				return;
 		}
 	}
 	m->matrix[menu_y] = (1 << menu_x);
@@ -53,7 +56,7 @@ void menu_click(State * s, LEDmatrix* m, const input_t input, const input_t prev
 
 void menu_setup(State * s, LEDmatrix* m) {
 	menu_x = 0;
-	//menu_y = 0;
+	menu_y = 0;
 	m->matrix[menu_y] = (1 << menu_x);
 	s->step = &menu_step;
 	s->click = &menu_click;

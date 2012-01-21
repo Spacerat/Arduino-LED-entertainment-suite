@@ -26,8 +26,10 @@ typedef struct _State {
 	state_func_input step;
 	state_func_input_two click;
 	
-	uint8_t clockdivide;
-	uint8_t counter;
+	unsigned int clockdivide;
+	unsigned int counter;
+	
+	int end;
 	LEDmatrix m;
 } State;
 

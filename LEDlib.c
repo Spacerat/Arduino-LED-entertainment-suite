@@ -14,32 +14,6 @@
 
 
 /*
-struct _LEDmatrix;
-struct _State;
-
-typedef void (*state_func)(struct _State*, struct _LEDmatrix*);
-typedef void (*state_func_input)(struct _State*, struct _LEDmatrix*, const uint8_t);
-typedef void (*state_func_input_two)(struct _State*, struct _LEDmatrix*, const uint8_t, const uint8_t);
-typedef struct _LEDmatrix{
-	uint8_t row;
-	uint_fast8_t clock;
-	uint8_t matrix[8];
-
-	
-} LEDmatrix;
-
-typedef struct _State {
-	state_func_input step;
-	state_func_input_two click;
-	
-	unsigned int clockdivide;
-	unsigned int counter;
-	LEDmatrix m;
-} State;
-
-*/
-
-/*
 	Initialises an LED matrix struct and prepares the board to output to the matrix.
 	Sets pins 2-9 and the clock/reset pins as output, and sends the reset signal.
 */
@@ -80,6 +54,7 @@ State *state_create(state_func setup, LEDmatrix* m) {
 	//Misc
 	s->clockdivide = 128;
 	s->counter = 0;
+	s->end = 0;
 	//User Setup
 	matrix_clear(m);
 	if (setup) setup(s, m);
@@ -115,9 +90,13 @@ int state_tick(State* s, LEDmatrix* m) {
 		s->counter = 0;
 		s->step(s, m, k);
 	}
+	if (s->end == 1) {
+		return 1;
+	}
 	if (input_check(&k, &p)) {
+		
 		s->click(s, m, k, p);
-		if (s->step == 0) {
+		if (s->step == 0 || s->end == 1) {
 			return 1;
 		}
 	}
