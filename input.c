@@ -1,8 +1,12 @@
+
+#include "input.h"
 #include <avr/io.h>
 #include <stdarg.h>
 #include <stdio.h>
 
-unsigned char disabled = 0;
+static unsigned char disabled = 0;
+
+
 
 #define PI0 PINC0
 #define PI1 PINC1
@@ -44,8 +48,8 @@ unsigned char input_init(void) {
 	DDRI7 &= ~(0 << PI7);
 }
 
-int input_check(unsigned char * input, unsigned char * prev) {
-	unsigned char c = (PINI0 & (1 << PI0)) 
+int input_check(input_t * input, input_t * prev) {
+	input_t c = (PINI0 & (1 << PI0)) 
 	                | (PINI1 & (1 << PI1))
 	                | (PINI2 & (1 << PI2))
 	                | (PINI3 & (1 << PI3))
@@ -53,7 +57,7 @@ int input_check(unsigned char * input, unsigned char * prev) {
 	                | (PINI5 & (1 << PI5))
 	                | (PINI6 & (1 << PI6))
 	                | (PINI7 & (1 << PI7));
-	unsigned char i = now_input;
+	input_t i = now_input;
 	now_input = c;
 	*input = c;
 	*prev = i;

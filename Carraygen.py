@@ -13,7 +13,7 @@ while (not end):
 		name = s[:-1]
 		if len(name) > 0:
 			# New pattern!
-			sys.stdout.write("unsigned char _%s[8] = {\n" % name)
+			sys.stdout.write("const uint8_t _%s[8] = {\n" % name)
 			for x in range(8):
 				binstr = sys.stdin.readline()[:-1]
 				sys.stdout.write("\t0x%s" % binascii.hexlify(chr(int(binstr, 2))))

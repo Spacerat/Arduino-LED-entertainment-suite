@@ -1,9 +1,11 @@
 //TODO: split LED Matrix and Game State functionality in to separate libraries.
 
+#include "LEDlib.h"
 #include <avr/io.h>
 #include <util/delay.h>
 #include <stdarg.h>
 #include <stdlib.h>
+#include <stdint.h>
 
 #include "input.h"
 
@@ -11,17 +13,17 @@
 #define RESETPIN PINB5
 
 
-
+/*
 struct _LEDmatrix;
 struct _State;
 
 typedef void (*state_func)(struct _State*, struct _LEDmatrix*);
-typedef void (*state_func_input)(struct _State*, struct _LEDmatrix*, const unsigned char);
-typedef void (*state_func_input_two)(struct _State*, struct _LEDmatrix*, const unsigned char, const unsigned char);
+typedef void (*state_func_input)(struct _State*, struct _LEDmatrix*, const uint8_t);
+typedef void (*state_func_input_two)(struct _State*, struct _LEDmatrix*, const uint8_t, const uint8_t);
 typedef struct _LEDmatrix{
-	unsigned char row;
-	unsigned char clock;
-	unsigned char matrix[8];
+	uint8_t row;
+	uint_fast8_t clock;
+	uint8_t matrix[8];
 
 	
 } LEDmatrix;
@@ -35,7 +37,7 @@ typedef struct _State {
 	LEDmatrix m;
 } State;
 
-
+*/
 
 /*
 	Initialises an LED matrix struct and prepares the board to output to the matrix.
@@ -106,8 +108,8 @@ void matrix_tick(LEDmatrix* m) {
 }
 
 int state_tick(State* s, LEDmatrix* m) {
-	unsigned char k = 0;
-	unsigned char p = 0;
+	input_t k = 0;
+	input_t p = 0;
 	if (s->counter == s->clockdivide) {
 
 		s->counter = 0;

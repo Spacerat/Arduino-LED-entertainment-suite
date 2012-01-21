@@ -3,7 +3,7 @@
 
 //////////---ANIMATION 1---/////////////
 
-void animation1_step(State * s, LEDmatrix* m, const unsigned char input) {
+void animation1_step(State * s, LEDmatrix* m, const input_t input) {
 	int i = 0;
 	for (i = 0; i < 8; i++) {
 		m->matrix[i] <<= 1;
@@ -13,7 +13,7 @@ void animation1_step(State * s, LEDmatrix* m, const unsigned char input) {
 	}
 }
 
-void animation1_click(State * s, LEDmatrix* m, const unsigned char input, const unsigned char prev) {
+void animation1_click(State * s, LEDmatrix* m, const input_t input, const input_t prev) {
 	if (input & 1) {
 		s->step = 0;
 	}

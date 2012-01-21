@@ -1,6 +1,8 @@
 #ifndef _LED_MATRIX_LIB
 #define _LED_MATRIX_LIB
 
+#include "input.h"
+#include "stdint.h"
 
 struct _LEDmatrix;
 struct _State;
@@ -9,13 +11,13 @@ struct _State;
 typedef void (*state_func)(struct _State*, struct _LEDmatrix*);
 
 //void somefunction(LEDmatrix * m, const unsigned char input) {};
-typedef void (*state_func_input)(struct _State*, struct _LEDmatrix*, const unsigned char);
-typedef void (*state_func_input_two)(struct _State*, struct _LEDmatrix*, const unsigned char, const unsigned char);
+typedef void (*state_func_input)(struct _State*, struct _LEDmatrix*, const input_t);
+typedef void (*state_func_input_two)(struct _State*, struct _LEDmatrix*, const input_t, const input_t);
 
 typedef struct _LEDmatrix{
-	unsigned char row;
-	unsigned char clock;
-	unsigned char matrix[8];
+	uint8_t row;
+	uint_fast8_t clock;
+	uint8_t matrix[8];
 
 	
 } LEDmatrix;
@@ -24,8 +26,8 @@ typedef struct _State {
 	state_func_input step;
 	state_func_input_two click;
 	
-	unsigned int clockdivide;
-	unsigned int counter;
+	uint8_t clockdivide;
+	uint8_t counter;
 	LEDmatrix m;
 } State;
 

@@ -23,12 +23,12 @@ int menu_y = 0;
 int menu_x = 0;
 
 // Define menu functionality
-void menu_step(State * s, LEDmatrix* m, const unsigned char input) {
+void menu_step(State * s, LEDmatrix* m, const input_t input) {
 	//serial_printf("working!\n");
 	//PORTB ^= 0xFF;
 }
 
-void menu_click(State * s, LEDmatrix* m, const unsigned char input, const unsigned char prev) {
+void menu_click(State * s, LEDmatrix* m, const input_t input, const input_t prev) {
 	m->matrix[menu_y] = 0;
 	if (input & 4) { //Up
 		menu_y = (menu_y == 7 ? 0 : menu_y + 1);
