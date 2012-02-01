@@ -54,6 +54,7 @@ void menu_click(State * s, LEDmatrix* m, const input_t input, const input_t prev
 	m->matrix[menu_y] = (1 << menu_x);
 }
 
+//Reset menu
 void menu_setup(State * s, LEDmatrix* m) {
 	menu_x = 0;
 	menu_y = 0;
