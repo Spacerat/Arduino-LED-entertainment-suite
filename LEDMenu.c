@@ -81,6 +81,7 @@ int main (void)
 	matrix_setup(m);
 	State * s = state_create(&menu_setup, m);
 	
+	//Main loop
 	while (1) {
 		if (tick) {
 			matrix_tick(m);
