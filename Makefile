@@ -25,7 +25,7 @@ TARGET=LEDMenu
 # OBJECTS are any other c files that are part of the projects (if any)
 # note that here the .c extensions are replaced by .o
 #OBJECTS=
-OBJECTS+=serial_lib_interrupt.c LEDlib.c input.c animation1.c animation2.c dodgegame.c
+OBJECTS+=serial_lib_interrupt.c LEDlib.c input.c animation1.c animation2.c dodgegame.c snake.c charstack.c
 
 
 # TDIR stands for tools dir root
