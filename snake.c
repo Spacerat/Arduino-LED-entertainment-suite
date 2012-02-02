@@ -1,10 +1,11 @@
 
+#include "charstack.h"
 #include "snake.h"
 //#include "serial_lib_interrupt.h"
 
 #define MATRIX_SET(matrix, x, y) (matrix[(y)] |= (1 << (x)))
 #define MATRIX_UNSET(matrix, x, y) (matrix[(y)] &= ~(1 << (x)))
-#define MATRIX_CHECK(matrix, y, y) (matrix[(y)] & (1 << (x)))
+#define MATRIX_CHECK(matrix, x, y) (matrix[(y)] & (1 << (x)))
 
 #define SNAKECOORD(x, y) ((x << 4) | (y))
 #define SNAKE_X(coord) ((coord & 0xF0) >> 4)
@@ -12,7 +13,7 @@
 
 //Le snake!
 typedef struct _snake {	
-	uint8_t heading = 0;
+	uint8_t heading;
 	LIFOuint8 * parts;
 } Snake;
 
@@ -33,6 +34,7 @@ Snake * create_snake(uint8_t tailx, uint8_t taily, uint8_t length) {
 
 //Matrix for positions of food
 static uint8_t * food_matrix;
+static void snakegame_free();
 
 //List of pointers to snakes (for now, just one snake).
 #define SNAKE_COUNT 1
@@ -41,7 +43,7 @@ static Snake * snakes[SNAKE_COUNT];
 void snake_step(State * state, LEDmatrix* m, const input_t input) {
 	uint8_t n;
 	uint8_t k;
-	unsigned int i;
+	uint8_t i;
 	Snake *s;
 	uint8_t next_x;
 	uint8_t next_y;
@@ -76,16 +78,16 @@ void snake_step(State * state, LEDmatrix* m, const input_t input) {
 			MATRIX_SET(food_matrix, rand() % 8, rand() % 8);
 		}
 		else {
-			stack_shift(snake->parts);
+			stack_shift(s->parts);
 		}
 		
-		stack_push(snake->parts, SNAKECOORD(next_x, next_y);
+		stack_push(s->parts, SNAKECOORD(next_x, next_y));
 		
 		//Check for collision with any snake
 		
 		for (k = 0; k < SNAKE_COUNT; k++) {
-			for(i = 0; i < snake->parts->pos; i++) {
-				if (next_x == SNAKE_X(snake->parts[i]) && next_y == SNAKE_Y(snake->parts[i])) {
+			for(i = 0; i < s->parts->pos; i++) {
+				if (next_x == SNAKE_X(s->parts->elements[i]) && next_y == SNAKE_Y(s->parts->elements[i])) {
 					state->end = 1;
 					snakegame_free();
 				}
@@ -101,7 +103,6 @@ static void snakegame_free() {
 		stack_free(snakes[i]->parts);
 		free(snakes[i]);
 	}
-	free(snakes);
 	free(food_matrix);
 }
 
@@ -134,6 +135,6 @@ void snake_setup(State * s, LEDmatrix* m) {
 	snakes[0] = create_snake(3, 3, 3);
 	
 	//Food!
-	MATRIX_SET(food_matrix, 4, 4)
+	MATRIX_SET(food_matrix, 4, 4);
 	
 }

@@ -1,7 +1,7 @@
 #ifndef _SNAKE
 #define _SNAKE
 
-#include "charstack.h"
+
 #include "LEDlib.h"
 #include "stdint.h"
 #include "stdlib.h"
