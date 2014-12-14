@@ -25,21 +25,23 @@ TARGET=LEDMenu
 # OBJECTS are any other c files that are part of the projects (if any)
 # note that here the .c extensions are replaced by .o
 #OBJECTS=
-OBJECTS+=serial_lib_interrupt.c LEDlib.c input.c animation1.c animation2.c dodgegame.c snake.c charstack.c
+OBJECTS+=LEDlib.c input.c animation1.c animation2.c dodgegame.c snake.c charstack.c
 
 
 # TDIR stands for tools dir root
 # OS X 
-#TROOT=/Applications/Arduino.app/Contents/Resources/Java/hardware/tools/avr/
+TROOT=/Applications/Arduino.app/Contents/Resources/Java/hardware/tools/avr/
 # iSolutions computer rooms
-TROOT=C:\PROGRA~2\arduino-0022\hardware\tools\avr\\
+#TROOT=C:\PROGRA~2\arduino-0022\hardware\tools\avr\\
 # for your own windows machine you may need to change to something like this:
 #TROOT=C:\Program Files\arduino-0022\hardware\tools\avr\\
 
 # TDIR stands for Tools Dir
-TDIR=
+#TDIR=
 # OS X 
-#TDIR=$(TROOT)bin/
+TDIR=$(TROOT)bin/
+
+export PATH:=$(TDIR):$(PATH)
 
 # Tools we need
 
@@ -62,27 +64,27 @@ PROG_METHOD=arduino
 # The port needs to be changed depending on the architecture!
 # You should be able to take this from the tools->serial port setting in the Arduino IDE 
 # (should be something like com6 on windows)
-PROG_PORT=/dev/ttyACM0
+PROG_PORT=/dev/tty.usbmodem1421
 PROG_RATE=115200
-PROG_CONF=/usr/share/arduino/hardware/tools/avrdude.conf
+PROG_CONF=$(TROOT)etc/avrdude.conf
 
 default: $(TARGET).hex
 
 # this defines how .o files are made from .c files
 %.o: %.c
-	$(CC) $(CCFLAGS) $(CCDEFS) -mmcu=$(MCU) -c $^ -o $@
+	$(TDIR)$(CC) $(CCFLAGS) $(CCDEFS) -mmcu=$(MCU) -c $^ -o $@
 
 # this defines how the target is built; it requires all the objects
 $(TARGET): $(TARGET).o $(OBJECTS) 
-	$(CC) -g -mmcu=$(MCU) $(CCDEFS) $^ -o $@ 
+	$(TDIR)$(CC) -g -mmcu=$(MCU) $(CCDEFS) $^ -o $@ 
 
 # this defines how the .hex file is built
 %.hex: $(TARGET)
-	$(OBJCOPY) -O ihex -R .eeprom $^ $@
+	$(TDIR)$(OBJCOPY) -O ihex -R .eeprom $^ $@
 
 # this is for uploading the code to the arduinon board
 program: $(TARGET).hex
-	$(PROGRAMMER) -C $(PROG_CONF) -F -V -p $(PROG_IC) -c $(PROG_METHOD) -P $(PROG_PORT) -b $(PROG_RATE) -U flash:w:$^ 
+	$(TDIR)$(PROGRAMMER) -C $(PROG_CONF) -F -V -p $(PROG_IC) -c $(PROG_METHOD) -P $(PROG_PORT) -b $(PROG_RATE) -U flash:w:$^ 
 
 # this removes all files that were created (if any)
 clean:
