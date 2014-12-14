@@ -12,4 +12,4 @@ int stack_push(LIFOuint8 * stack, uint8_t item);
 uint8_t stack_pop(LIFOuint8 * stack);
 uint8_t stack_peek(LIFOuint8 * stack);
 uint8_t stack_look(LIFOuint8 * stack, int back);
-uint8_t stack_shift(LIFOuint8);
+uint8_t stack_shift(LIFOuint8 * stack);

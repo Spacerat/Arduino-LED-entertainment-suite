@@ -5,7 +5,7 @@ Return a pointer to a new stack.
 	@size is the maximum number of elements.
 */
 LIFOuint8 * stack_create(unsigned int size) {
-	LIFO * stack;
+	LIFOuint8 * stack;
 	stack = (LIFOuint8*)malloc(sizeof(LIFOuint8));
 	stack->elements = malloc(size * sizeof(uint8_t));
 	stack->pos = 0;
@@ -43,7 +43,7 @@ uint8_t stack_peek(LIFOuint8 * stack) {
 		//Fail
 		return 0;
 	}
-	uint8_t = stack->elements[stack->pos - 1];
+	uint8_t item = stack->elements[stack->pos - 1];
 	return item;
 }
 
@@ -53,7 +53,7 @@ uint8_t stack_look(LIFOuint8 * stack, int back) {
 		//Fail
 		return 0;
 	}
-	uint8_t = stack->elements[stack->pos - 1 - back];
+	uint8_t item = stack->elements[stack->pos - 1 - back];
 	return item;
 }
 
